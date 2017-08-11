@@ -1,0 +1,443 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		47C949041F3D3FEC00AAE6FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949031F3D3FEC00AAE6FA /* AppDelegate.swift */; };
+		47C949061F3D3FEC00AAE6FA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47C949051F3D3FEC00AAE6FA /* GameScene.sks */; };
+		47C949081F3D3FEC00AAE6FA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47C949071F3D3FEC00AAE6FA /* Actions.sks */; };
+		47C9490A1F3D3FEC00AAE6FA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949091F3D3FEC00AAE6FA /* GameScene.swift */; };
+		47C9490C1F3D3FEC00AAE6FA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9490B1F3D3FEC00AAE6FA /* GameViewController.swift */; };
+		47C9490F1F3D3FEC00AAE6FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C9490D1F3D3FEC00AAE6FA /* Main.storyboard */; };
+		47C949111F3D3FEC00AAE6FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C949101F3D3FEC00AAE6FA /* Assets.xcassets */; };
+		47C949141F3D3FEC00AAE6FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C949121F3D3FEC00AAE6FA /* LaunchScreen.storyboard */; };
+		47C9491F1F3D3FEC00AAE6FA /* ExtremePongTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9491E1F3D3FEC00AAE6FA /* ExtremePongTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47C9491B1F3D3FEC00AAE6FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47C948F81F3D3FEC00AAE6FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47C948FF1F3D3FEC00AAE6FA;
+			remoteInfo = ExtremePong;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		47C949001F3D3FEC00AAE6FA /* ExtremePong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExtremePong.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C949031F3D3FEC00AAE6FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		47C949051F3D3FEC00AAE6FA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		47C949071F3D3FEC00AAE6FA /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		47C949091F3D3FEC00AAE6FA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		47C9490B1F3D3FEC00AAE6FA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		47C9490E1F3D3FEC00AAE6FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		47C949101F3D3FEC00AAE6FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		47C949131F3D3FEC00AAE6FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		47C949151F3D3FEC00AAE6FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47C9491A1F3D3FEC00AAE6FA /* ExtremePongTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExtremePongTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		47C9491E1F3D3FEC00AAE6FA /* ExtremePongTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtremePongTests.swift; sourceTree = "<group>"; };
+		47C949201F3D3FEC00AAE6FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		47C948FD1F3D3FEC00AAE6FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C949171F3D3FEC00AAE6FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		47C948F71F3D3FEC00AAE6FA = {
+			isa = PBXGroup;
+			children = (
+				47C949021F3D3FEC00AAE6FA /* ExtremePong */,
+				47C9491D1F3D3FEC00AAE6FA /* ExtremePongTests */,
+				47C949011F3D3FEC00AAE6FA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		47C949011F3D3FEC00AAE6FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47C949001F3D3FEC00AAE6FA /* ExtremePong.app */,
+				47C9491A1F3D3FEC00AAE6FA /* ExtremePongTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		47C949021F3D3FEC00AAE6FA /* ExtremePong */ = {
+			isa = PBXGroup;
+			children = (
+				47C949031F3D3FEC00AAE6FA /* AppDelegate.swift */,
+				47C949051F3D3FEC00AAE6FA /* GameScene.sks */,
+				47C949071F3D3FEC00AAE6FA /* Actions.sks */,
+				47C949091F3D3FEC00AAE6FA /* GameScene.swift */,
+				47C9490B1F3D3FEC00AAE6FA /* GameViewController.swift */,
+				47C9490D1F3D3FEC00AAE6FA /* Main.storyboard */,
+				47C949101F3D3FEC00AAE6FA /* Assets.xcassets */,
+				47C949121F3D3FEC00AAE6FA /* LaunchScreen.storyboard */,
+				47C949151F3D3FEC00AAE6FA /* Info.plist */,
+			);
+			path = ExtremePong;
+			sourceTree = "<group>";
+		};
+		47C9491D1F3D3FEC00AAE6FA /* ExtremePongTests */ = {
+			isa = PBXGroup;
+			children = (
+				47C9491E1F3D3FEC00AAE6FA /* ExtremePongTests.swift */,
+				47C949201F3D3FEC00AAE6FA /* Info.plist */,
+			);
+			path = ExtremePongTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		47C948FF1F3D3FEC00AAE6FA /* ExtremePong */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C949231F3D3FEC00AAE6FA /* Build configuration list for PBXNativeTarget "ExtremePong" */;
+			buildPhases = (
+				47C948FC1F3D3FEC00AAE6FA /* Sources */,
+				47C948FD1F3D3FEC00AAE6FA /* Frameworks */,
+				47C948FE1F3D3FEC00AAE6FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ExtremePong;
+			productName = ExtremePong;
+			productReference = 47C949001F3D3FEC00AAE6FA /* ExtremePong.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47C949191F3D3FEC00AAE6FA /* ExtremePongTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47C949261F3D3FEC00AAE6FA /* Build configuration list for PBXNativeTarget "ExtremePongTests" */;
+			buildPhases = (
+				47C949161F3D3FEC00AAE6FA /* Sources */,
+				47C949171F3D3FEC00AAE6FA /* Frameworks */,
+				47C949181F3D3FEC00AAE6FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47C9491C1F3D3FEC00AAE6FA /* PBXTargetDependency */,
+			);
+			name = ExtremePongTests;
+			productName = ExtremePongTests;
+			productReference = 47C9491A1F3D3FEC00AAE6FA /* ExtremePongTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		47C948F81F3D3FEC00AAE6FA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Tony Dakhoul";
+				TargetAttributes = {
+					47C948FF1F3D3FEC00AAE6FA = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = G5BQ3HT6JC;
+						ProvisioningStyle = Automatic;
+					};
+					47C949191F3D3FEC00AAE6FA = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = G5BQ3HT6JC;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 47C948FF1F3D3FEC00AAE6FA;
+					};
+				};
+			};
+			buildConfigurationList = 47C948FB1F3D3FEC00AAE6FA /* Build configuration list for PBXProject "ExtremePong" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 47C948F71F3D3FEC00AAE6FA;
+			productRefGroup = 47C949011F3D3FEC00AAE6FA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47C948FF1F3D3FEC00AAE6FA /* ExtremePong */,
+				47C949191F3D3FEC00AAE6FA /* ExtremePongTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		47C948FE1F3D3FEC00AAE6FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C9490F1F3D3FEC00AAE6FA /* Main.storyboard in Resources */,
+				47C949061F3D3FEC00AAE6FA /* GameScene.sks in Resources */,
+				47C949111F3D3FEC00AAE6FA /* Assets.xcassets in Resources */,
+				47C949141F3D3FEC00AAE6FA /* LaunchScreen.storyboard in Resources */,
+				47C949081F3D3FEC00AAE6FA /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C949181F3D3FEC00AAE6FA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47C948FC1F3D3FEC00AAE6FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C9490A1F3D3FEC00AAE6FA /* GameScene.swift in Sources */,
+				47C9490C1F3D3FEC00AAE6FA /* GameViewController.swift in Sources */,
+				47C949041F3D3FEC00AAE6FA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47C949161F3D3FEC00AAE6FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47C9491F1F3D3FEC00AAE6FA /* ExtremePongTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47C9491C1F3D3FEC00AAE6FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47C948FF1F3D3FEC00AAE6FA /* ExtremePong */;
+			targetProxy = 47C9491B1F3D3FEC00AAE6FA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		47C9490D1F3D3FEC00AAE6FA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47C9490E1F3D3FEC00AAE6FA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		47C949121F3D3FEC00AAE6FA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47C949131F3D3FEC00AAE6FA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		47C949211F3D3FEC00AAE6FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47C949221F3D3FEC00AAE6FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		47C949241F3D3FEC00AAE6FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G5BQ3HT6JC;
+				INFOPLIST_FILE = ExtremePong/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.TonyDakhoul.ExtremePong;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		47C949251F3D3FEC00AAE6FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G5BQ3HT6JC;
+				INFOPLIST_FILE = ExtremePong/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.TonyDakhoul.ExtremePong;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		47C949271F3D3FEC00AAE6FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = G5BQ3HT6JC;
+				INFOPLIST_FILE = ExtremePongTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.TonyDakhoul.ExtremePongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExtremePong.app/ExtremePong";
+			};
+			name = Debug;
+		};
+		47C949281F3D3FEC00AAE6FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = G5BQ3HT6JC;
+				INFOPLIST_FILE = ExtremePongTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.TonyDakhoul.ExtremePongTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExtremePong.app/ExtremePong";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		47C948FB1F3D3FEC00AAE6FA /* Build configuration list for PBXProject "ExtremePong" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C949211F3D3FEC00AAE6FA /* Debug */,
+				47C949221F3D3FEC00AAE6FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C949231F3D3FEC00AAE6FA /* Build configuration list for PBXNativeTarget "ExtremePong" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C949241F3D3FEC00AAE6FA /* Debug */,
+				47C949251F3D3FEC00AAE6FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		47C949261F3D3FEC00AAE6FA /* Build configuration list for PBXNativeTarget "ExtremePongTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47C949271F3D3FEC00AAE6FA /* Debug */,
+				47C949281F3D3FEC00AAE6FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 47C948F81F3D3FEC00AAE6FA /* Project object */;
+}
