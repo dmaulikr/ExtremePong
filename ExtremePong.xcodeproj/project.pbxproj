@@ -24,7 +24,6 @@
 		47C949391F3D42BD00AAE6FA /* Particle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949381F3D42BD00AAE6FA /* Particle.swift */; };
 		47C9493B1F3D42D500AAE6FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9493A1F3D42D500AAE6FA /* Player.swift */; };
 		47C9493D1F3D42EC00AAE6FA /* GestureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9493C1F3D42EC00AAE6FA /* GestureView.swift */; };
-		47C9493F1F3D44DD00AAE6FA /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9493E1F3D44DD00AAE6FA /* spark.png */; };
 		47C949411F3D455000AAE6FA /* BallTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47C949401F3D455000AAE6FA /* BallTrail.sks */; };
 /* End PBXBuildFile section */
 
@@ -60,7 +59,6 @@
 		47C949381F3D42BD00AAE6FA /* Particle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Particle.swift; sourceTree = "<group>"; };
 		47C9493A1F3D42D500AAE6FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		47C9493C1F3D42EC00AAE6FA /* GestureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureView.swift; sourceTree = "<group>"; };
-		47C9493E1F3D44DD00AAE6FA /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		47C949401F3D455000AAE6FA /* BallTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallTrail.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,7 +159,6 @@
 		47C9492D1F3D415E00AAE6FA /* Particles */ = {
 			isa = PBXGroup;
 			children = (
-				47C9493E1F3D44DD00AAE6FA /* spark.png */,
 				47C949401F3D455000AAE6FA /* BallTrail.sks */,
 			);
 			name = Particles;
@@ -253,7 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C9490F1F3D3FEC00AAE6FA /* Main.storyboard in Resources */,
-				47C9493F1F3D44DD00AAE6FA /* spark.png in Resources */,
 				47C949061F3D3FEC00AAE6FA /* GameScene.sks in Resources */,
 				47C949111F3D3FEC00AAE6FA /* Assets.xcassets in Resources */,
 				47C949411F3D455000AAE6FA /* BallTrail.sks in Resources */,

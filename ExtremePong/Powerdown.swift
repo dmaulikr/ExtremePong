@@ -17,8 +17,8 @@ enum PowerdownType: UInt32 {
     fileprivate static let count: PowerdownType.RawValue = {
         // find the maximum enum value
         var maxValue: UInt32 = 0
-        while let _ = PowerdownType(rawValue: maxValue) { }
-        maxValue += 1;
+        while let _ = PowerdownType(rawValue: maxValue) { maxValue += 1
+        }
         return maxValue
     }()
 

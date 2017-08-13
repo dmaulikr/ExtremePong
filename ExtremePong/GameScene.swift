@@ -47,17 +47,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         super.didMove(to: view)
 
-        self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-
-        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        borderBody.friction = 0
-        borderBody.restitution = 1
-        borderBody.linearDamping = 0
-        borderBody.angularDamping = 0
-        borderBody.categoryBitMask = BodyCategory.border.rawValue
-        self.physicsBody = borderBody
-
+        self.setupPhysics()
         self.setupField()
 
         let padding: CGFloat = 10
@@ -185,6 +175,19 @@ class GameScene: SKScene {
         }
     }
 
+    fileprivate func setupPhysics() {
+        self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+
+        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        borderBody.friction = 0
+        borderBody.restitution = 1
+        borderBody.linearDamping = 0
+        borderBody.angularDamping = 0
+        borderBody.categoryBitMask = BodyCategory.border.rawValue
+        self.physicsBody = borderBody
+    }
+
     fileprivate func setupField() {
         if let viewFrame = self.view?.frame {
             let midline = SKShapeNode(rect: CGRect(x: 0, y: viewFrame.height/2 - 1, width: viewFrame.width, height: 1))
@@ -256,8 +259,8 @@ class GameScene: SKScene {
             guard var score = Int(scoreText) else {
                 return
             }
+            score += 1
             player.score.text = "\(score)"
-            score += 1;
             self.clearField()
         }
     }

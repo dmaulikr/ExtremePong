@@ -16,11 +16,11 @@ enum PowerupType: UInt32 {
     longPaddles,
     shortGoal
 
-    fileprivate static let count: PowerupType.RawValue = {
+    private static let count: PowerupType.RawValue = {
         // find the maximum enum value
         var maxValue: UInt32 = 0
-        while let _ = PowerupType(rawValue: maxValue) { }
-        maxValue += 1;
+        while let _ = PowerupType(rawValue: maxValue) { maxValue += 1
+        }
         return maxValue
     }()
 
