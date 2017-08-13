@@ -1,6 +1,6 @@
 # ExtremePong
 
-Re-imagined multiplayer pong. But extreme.
+Re-imagined single-screen multiplayer pong. But extreme.
 
 MVP Plan:
 
