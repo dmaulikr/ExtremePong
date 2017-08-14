@@ -54,6 +54,15 @@ class Player {
         }
     }
 
+    func clearAllPaddles() {
+        for paddle in self.paddles {
+            paddle.removeFromParent()
+            self.removePaddle(paddle)
+        }
+        self.drawnPaddle?.removeFromParent()
+        self.drawnPaddle = nil
+    }
+
     func addPowerup(_ powerup: Powerup) {
         self.powerups.append(powerup)
         self.addEffect(powerup)

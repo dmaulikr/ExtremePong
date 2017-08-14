@@ -51,6 +51,10 @@ class Powerup: PowerEffect {
         }
         let physicsBody = SKPhysicsBody(polygonFrom: path)
         physicsBody.isDynamic = true
+        physicsBody.restitution = 1
+        physicsBody.friction = 0
+        physicsBody.linearDamping = 0
+        physicsBody.angularDamping = 0
         physicsBody.allowsRotation = false
         physicsBody.categoryBitMask = BodyCategory.powerup.rawValue
         physicsBody.collisionBitMask = BodyCategory.border.rawValue

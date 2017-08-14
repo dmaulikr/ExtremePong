@@ -49,18 +49,7 @@ class GameScene: SKScene {
 
         self.setupPhysics()
         self.setupField()
-
-        let padding: CGFloat = 10
-        var labelWidth = self.player1.score.frame.width
-        let labelHeight = self.player1.score.frame.height
-        self.player1.score.position = CGPoint(x: view.frame.width - labelWidth, y: view.frame.midY - labelHeight - padding)
-        self.player1.score.fontColor = Player1Color
-        self.addChild(self.player1.score)
-
-        labelWidth = self.player2.score.frame.width
-        self.player2.score.position = CGPoint(x: view.frame.width - labelWidth, y: view.frame.midY + padding)
-        self.player2.score.fontColor = Player2Color
-        self.addChild(self.player2.score)
+        self.setupScoreLabelsInView(view)
 
         self.p1View.frame = CGRect(x: 0, y: view.frame.height/2, width: view.frame.width, height: view.frame.height/2)
         self.p2View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2)
@@ -131,9 +120,24 @@ class GameScene: SKScene {
         }
     }
 
+    fileprivate func setupScoreLabelsInView(_ view: SKView) {
+        let padding: CGFloat = 10
+        var labelWidth = self.player1.score.frame.width
+        let labelHeight = self.player1.score.frame.height
+        self.player1.score.position = CGPoint(x: view.frame.width - labelWidth, y: view.frame.midY - labelHeight - padding)
+        self.player1.score.fontColor = Player1Color
+        self.addChild(self.player1.score)
+
+        labelWidth = self.player2.score.frame.width
+        self.player2.score.position = CGPoint(x: view.frame.width - labelWidth, y: view.frame.midY + padding)
+        self.player2.score.fontColor = Player2Color
+        self.addChild(self.player2.score)
+    }
+
     fileprivate func startTimer() {
         self.powerEffectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GameScene.createRandomPowerEffect), userInfo: nil, repeats: false)
         self.powerEffect?.removeFromParent()
+        self.powerEffect = nil
     }
 
     fileprivate func checkForMatchingPaddle(_ physicsBody: SKPhysicsBody) -> (player: Player, paddle: Paddle)? {
@@ -162,10 +166,10 @@ class GameScene: SKScene {
         let dx = Int(arc4random_uniform(6) + 4)
 
         let positiveOrNegative = Int(arc4random_uniform(2))
-        if positiveOrNegative == 1 {
-            dy = dx - 10
-        } else {
+        if positiveOrNegative == 0 {
             dy = 10 - dx
+        } else {
+            dy = dx - 10
         }
 
         let impulse = CGVector(dx: dx, dy: dy)
@@ -258,15 +262,8 @@ class GameScene: SKScene {
     }
 
     fileprivate func clearField() {
-        for paddle in self.player1.paddles {
-            self.player1.removePaddle(paddle)
-            paddle.removeFromParent()
-        }
-
-        for paddle in self.player2.paddles {
-            self.player2.removePaddle(paddle)
-            paddle.removeFromParent()
-        }
+        self.player1.clearAllPaddles()
+        self.player2.clearAllPaddles()
 
         let ball = self.childNode(withName: BallName)
         ball?.removeFromParent()
@@ -321,6 +318,11 @@ class GameScene: SKScene {
             recognizer.setTranslation(CGPoint.zero, in: recognizer.view)
             break
 
+        case .ended:
+            let velocity = recognizer.velocity(in: recognizer.view!)
+            self.selectedNode.physicsBody?.velocity = CGVector(dx: velocity.x, dy: -velocity.y)
+            break
+
         default:
             break
         }
@@ -328,6 +330,7 @@ class GameScene: SKScene {
 
     func panForTranslation(_ translation : CGPoint) {
         let position = selectedNode.position
+        selectedNode.physicsBody?.velocity = CGVector.zero
         selectedNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
     }
 
