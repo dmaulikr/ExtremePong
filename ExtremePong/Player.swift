@@ -31,24 +31,20 @@ class Player {
         self.score = SKLabelNode(text: "0")
     }
 
-    func canAddPaddle(_ paddle: Paddle) -> Bool {
+    func canAddPaddle() -> Bool {
         return self.paddles.count < self.paddleCount
     }
 
-    func addPaddle() {
+    func addPaddle(completion: (_ paddle: Paddle) -> Void) {
         guard let drawnPaddle = self.drawnPaddle else {
             return
         }
-
-        
-    }
-
-    func addPaddle(_ paddle: Paddle, completion: () -> Void) {
-        if self.canAddPaddle(paddle) {
+        if self.canAddPaddle() {
+            let paddle = Paddle.paddle(fromPaddle: drawnPaddle)
             self.paddles.append(paddle)
             self.drawnPaddle?.removeFromParent()
             self.drawnPaddle = nil
-            completion()
+            completion(paddle)
         }
     }
 

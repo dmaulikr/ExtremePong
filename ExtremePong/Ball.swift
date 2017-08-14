@@ -9,7 +9,6 @@
 import SpriteKit
 
 let BallRadius: CGFloat = 10
-
 let BallName = "ball"
 
 class Ball: SKShapeNode {
@@ -24,6 +23,7 @@ class Ball: SKShapeNode {
     fileprivate func setupBall() {
         self.fillColor = SKColor.white
         guard let path = self.path else {
+            assert(false, "There should always be a valid path")
             return
         }
         let physicsBody = SKPhysicsBody(polygonFrom: path)

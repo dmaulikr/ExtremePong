@@ -19,11 +19,9 @@ class Paddle: SKShapeNode {
     }
 
     static func paddle(fromPaddle paddle: Paddle) -> Paddle {
-        if let paddleCopy = paddle.copy() as? Paddle {
-            paddleCopy.setupPaddle(withPhysics: true)
-            return paddleCopy
-        }
-        return paddle
+        let paddleCopy = paddle.copy() as! Paddle
+        paddleCopy.setupPaddle(withPhysics: true)
+        return paddleCopy
     }
 
     static func drawnPaddle(_ width: CGFloat) -> Paddle {
@@ -37,6 +35,7 @@ class Paddle: SKShapeNode {
         self.fillColor = SKColor.white
         self.alpha = 1.0
         guard let path = self.path else {
+            assert(false, "There should always be a valid path")
             return
         }
 

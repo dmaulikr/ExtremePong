@@ -79,137 +79,6 @@ class GameScene: SKScene {
         self.startTimer()
     }
 
-    fileprivate func startTimer() {
-        self.powerEffectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GameScene.createRandomPowerEffect), userInfo: nil, repeats: false)
-        self.powerEffect?.removeFromParent()
-    }
-
-    fileprivate func checkForMatchingPaddle(_ physicsBody: SKPhysicsBody) -> (player: Player, paddle: Paddle)? {
-        for paddle in self.player1.paddles {
-            if paddle.physicsBody == physicsBody {
-                return (self.player1, paddle)
-            }
-        }
-        for paddle in self.player2.paddles {
-            if paddle.physicsBody == physicsBody {
-                return (self.player2, paddle)
-            }
-        }
-        return nil
-    }
-
-    fileprivate func createBall() {
-        let ball = Ball.ball()
-
-        guard let viewFrame = self.view?.frame else {
-            return
-        }
-        ball.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
-        self.addChild(ball)
-        var dy: Int = 0
-        let dx = Int(arc4random_uniform(6) + 4)
-
-        let positiveOrNegative = Int(arc4random_uniform(2))
-        if positiveOrNegative == 1 {
-            dy = dx - 10
-        } else {
-            dy = 10 - dx
-        }
-
-        let impulse = CGVector(dx: dx, dy: dy)
-        ball.physicsBody?.applyImpulse(impulse)
-        self.playing = true
-    }
-
-    fileprivate func createPowerup() {
-        let powerup = Powerup.powerup()
-        if let viewFrame = self.view?.frame {
-            powerup.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
-            self.powerEffect = powerup
-            self.addChild(self.powerEffect!)
-        }
-    }
-
-    fileprivate func createPowerdown() {
-        let powerdown = Powerdown.powerdown()
-        if let viewFrame = self.view?.frame {
-            powerdown.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
-            self.powerEffect = powerdown
-            self.addChild(self.powerEffect!)
-        }
-    }
-
-    @objc fileprivate func createRandomPowerEffect() {
-        let rand = arc4random_uniform(2)
-        if rand == 0 {
-            self.createPowerup()
-        } else {
-            self.createPowerdown()
-        }
-    }
-
-    fileprivate func placePaddle(_ paddle: Paddle, player: Player, position: CGPoint, angle: CGFloat) {
-        if self.playing {
-            player.addPaddle(paddle, completion: { 
-                paddle.zRotation = angle
-                paddle.position = position
-                self.addChild(paddle)
-
-                if !self.paddleSafeToPlace(paddle) {
-                    player.removePaddle(paddle)
-                    paddle.removeFromParent()
-                }
-            })
-        }
-    }
-
-    fileprivate func placeDrawnPaddle(_ paddle: Paddle,
-                                      player: Player,
-                                      position: CGPoint,
-                                      angle: CGFloat) {
-        if self.playing && player.canAddPaddle(paddle) {
-            paddle.zRotation = angle
-            paddle.position = position
-            self.addChild(paddle)
-
-            guard let drawnPaddle = player.drawnPaddle else {
-                player.drawnPaddle = paddle
-                return
-            }
-
-            drawnPaddle.removeFromParent()
-            if !self.paddleSafeToPlace(paddle) {
-                paddle.removeFromParent()
-                self.addChild(drawnPaddle)
-            } else {
-                player.drawnPaddle = paddle
-            }
-
-            //make sure to add the Player.drawnPaddle to list of paddles but with physics rather than a new calculation
-        }
-    }
-
-    fileprivate func paddleSafeToPlace(_ paddle: Paddle) -> Bool {
-        guard let
-            p1Goal = self.childNode(withName: self.p1GoalName),
-            let p2Goal = self.childNode(withName: self.p2GoalName),
-            let midline = self.childNode(withName: self.midlineName),
-            let ball = self.childNode(withName: BallName)
-            else {
-                return false
-        }
-
-        var safeToPlace = true;
-        if paddle.intersects(p1Goal)
-            || paddle.intersects(p2Goal)
-            || paddle.intersects(midline)
-            || paddle.intersects(ball) {
-
-            safeToPlace = false
-        }
-        return safeToPlace
-    }
-
     fileprivate func setupPhysics() {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -260,6 +129,132 @@ class GameScene: SKScene {
             self.player1.goal.strokeColor = Player1Color
             self.addChild(self.player1.goal)
         }
+    }
+
+    fileprivate func startTimer() {
+        self.powerEffectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GameScene.createRandomPowerEffect), userInfo: nil, repeats: false)
+        self.powerEffect?.removeFromParent()
+    }
+
+    fileprivate func checkForMatchingPaddle(_ physicsBody: SKPhysicsBody) -> (player: Player, paddle: Paddle)? {
+        for paddle in self.player1.paddles {
+            if paddle.physicsBody == physicsBody {
+                return (self.player1, paddle)
+            }
+        }
+        for paddle in self.player2.paddles {
+            if paddle.physicsBody == physicsBody {
+                return (self.player2, paddle)
+            }
+        }
+        return nil
+    }
+
+    fileprivate func createBall() {
+        let ball = Ball.ball()
+
+        guard let viewFrame = self.view?.frame else {
+            return
+        }
+        ball.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
+        self.addChild(ball)
+        var dy: Int = 0
+        let dx = Int(arc4random_uniform(6) + 4)
+
+        let positiveOrNegative = Int(arc4random_uniform(2))
+        if positiveOrNegative == 1 {
+            dy = dx - 10
+        } else {
+            dy = 10 - dx
+        }
+
+        let impulse = CGVector(dx: dx, dy: dy)
+        ball.physicsBody?.applyImpulse(impulse)
+        self.playing = true
+    }
+
+    @objc fileprivate func createRandomPowerEffect() {
+        let rand = arc4random_uniform(2)
+        if rand == 0 {
+            self.createPowerup()
+        } else {
+            self.createPowerdown()
+        }
+    }
+
+    fileprivate func createPowerup() {
+        let powerup = Powerup.powerup()
+        if let viewFrame = self.view?.frame {
+            powerup.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
+            self.powerEffect = powerup
+            self.addChild(self.powerEffect!)
+        }
+    }
+
+    fileprivate func createPowerdown() {
+        let powerdown = Powerdown.powerdown()
+        if let viewFrame = self.view?.frame {
+            powerdown.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
+            self.powerEffect = powerdown
+            self.addChild(self.powerEffect!)
+        }
+    }
+
+    fileprivate func placeDrawnPaddle(_ paddle: Paddle,
+                                      forPlayer player: Player,
+                                      position: CGPoint,
+                                      angle: CGFloat) {
+        if self.playing && player.canAddPaddle() {
+            paddle.zRotation = angle
+            paddle.position = position
+            self.addChild(paddle)
+
+            guard let drawnPaddle = player.drawnPaddle else {
+                player.drawnPaddle = paddle
+                return
+            }
+
+            drawnPaddle.removeFromParent()
+            player.drawnPaddle = paddle
+        }
+    }
+
+    fileprivate func placePaddle(forPlayer player: Player,
+                                 angle: CGFloat,
+                                 position: CGPoint) {
+        if self.playing {
+            player.addPaddle(completion: { (paddle) in
+                paddle.zRotation = angle
+                paddle.position = position
+                self.addChild(paddle)
+
+                if !self.paddleSafeToPlace(paddle) {
+                    paddle.removeFromParent()
+                    player.removePaddle(paddle)
+                }
+            })
+        }
+    }
+
+    fileprivate func paddleSafeToPlace(_ paddle: Paddle) -> Bool {
+        guard let
+            p1Goal = self.childNode(withName: self.p1GoalName),
+            let p2Goal = self.childNode(withName: self.p2GoalName),
+            let midline = self.childNode(withName: self.midlineName),
+            let ball = self.childNode(withName: BallName)
+            else {
+                return false
+        }
+
+        var safeToPlace = true;
+        if paddle.intersects(p1Goal)
+            || paddle.intersects(p2Goal)
+            || paddle.intersects(midline)
+            || paddle.intersects(ball) {
+
+            safeToPlace = false
+        }
+        return safeToPlace
     }
 
     fileprivate func clearField() {
@@ -385,33 +380,18 @@ extension GameScene: GestureViewDelegate {
             case .changed:
                 paddle = Paddle.drawnPaddle(length)
                 self.placeDrawnPaddle(paddle,
-                                      player: player,
+                                      forPlayer: player,
                                       position: positionInScene,
                                       angle: angleInScene)
                 break
             case .ended:
-                paddle = Paddle.paddle(length)
-                self.placePaddle(paddle,
-                                 player: player,
-                                 position: positionInScene,
-                                 angle: angleInScene)
+                self.placePaddle(forPlayer: player,
+                                 angle: angleInScene,
+                                 position: positionInScene)
                 break
             default:
                 break
             }
-
-//            if self.p1View == gestureView {
-//                self.placePaddle(paddle,
-//                                 player: self.player1,
-//                                 position: positionInScene,
-//                                 angle: angleInScene)
-//
-//            } else if self.p2View == gestureView {
-//                self.placePaddle(paddle,
-//                                 player: self.player2,
-//                                 position: positionInScene,
-//                                 angle: angleInScene)
-//            }
         }
     }
 

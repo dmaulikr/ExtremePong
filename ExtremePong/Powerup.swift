@@ -46,6 +46,7 @@ class Powerup: PowerEffect {
         self.lineWidth = 2.0
 
         guard let path = self.path else {
+            assert(false, "There should always be a valid path")
             return
         }
         let physicsBody = SKPhysicsBody(polygonFrom: path)
