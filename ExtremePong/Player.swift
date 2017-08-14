@@ -20,6 +20,7 @@ class Player {
     let name: String
     let score: SKLabelNode
     var goal = SKShapeNode(rect: CGRect.zero)
+    var drawnPaddle: Paddle?
     var paddles = [Paddle]()
     var powerups = [Powerup]()
     var powerdowns = [Powerdown]()
@@ -31,11 +32,24 @@ class Player {
     }
 
     func canAddPaddle(_ paddle: Paddle) -> Bool {
-        if self.paddles.count < self.paddleCount {
-            self.paddles.append(paddle)
-            return true
+        return self.paddles.count < self.paddleCount
+    }
+
+    func addPaddle() {
+        guard let drawnPaddle = self.drawnPaddle else {
+            return
         }
-        return false
+
+        
+    }
+
+    func addPaddle(_ paddle: Paddle, completion: () -> Void) {
+        if self.canAddPaddle(paddle) {
+            self.paddles.append(paddle)
+            self.drawnPaddle?.removeFromParent()
+            self.drawnPaddle = nil
+            completion()
+        }
     }
 
     func removePaddle(_ paddle: Paddle) {

@@ -9,8 +9,14 @@
 import UIKit
 
 protocol GestureViewDelegate: class {
-    func didRecognizeSwipeInView(_ gestureView: GestureView, angle: CGFloat, center: CGPoint)
+    func didRecognizeSwipeInView(_ gestureView: GestureView,
+                                 gestureRecognizer: UIGestureRecognizer,
+                                 length: CGFloat,
+                                 angle: CGFloat,
+                                 center: CGPoint)
     func shouldRecognizeSwipeInView(_ gestureView: GestureView, touch: UITouch) -> Bool
+
+    func maxTranslationInGestureView(_ gestureView: GestureView) -> CGFloat
 }
 
 class GestureView: UIView, UIGestureRecognizerDelegate {
@@ -24,6 +30,7 @@ class GestureView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(GestureView.handlePan(_:)))
         panGestureRecognizer.delegate = self
+        panGestureRecognizer.maximumNumberOfTouches = 1
         self.addGestureRecognizer(panGestureRecognizer)
     }
 
@@ -32,24 +39,28 @@ class GestureView: UIView, UIGestureRecognizerDelegate {
     }
 
     func handlePan(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        if panGestureRecognizer.state != .cancelled {
-            let translation = panGestureRecognizer.translation(in: self)
-
-            if abs(translation.x) >= self.paddleCreationOffset || abs(translation.y) >= self.paddleCreationOffset {
-
-                guard let startPoint = self.startPoint else {
-                    return
-                }
-                let point = panGestureRecognizer.location(in: self)
-                let angle = self.radianAngleBetweenTwoPoints(startPoint, secondPoint: point)
-                let center = self.centerBetweenTwoPoints(startPoint, secondPoint: point)
-
-                panGestureRecognizer.isEnabled = false
-                self.delegate?.didRecognizeSwipeInView(self, angle: angle, center: center)
-            }
-        } else {
-            panGestureRecognizer.isEnabled = true;
+        guard let
+            startPoint = self.startPoint,
+            let maxLength = self.delegate?.maxTranslationInGestureView(self)
+            else {
+                return
         }
+
+        let point = panGestureRecognizer.location(in: self)
+        var length = self.distanceBetweenTwoPoints(startPoint, secondPoint: point)
+        let angle = self.radianAngleBetweenTwoPoints(startPoint, secondPoint: point)
+
+        length = length > maxLength ? maxLength : length
+        let endPoint = self.endpointFromLengthAndAngle(initialPoint: startPoint,
+                                                       length: length,
+                                                       angle: angle)
+        let center = self.centerBetweenTwoPoints(startPoint, secondPoint: endPoint)
+
+        self.delegate?.didRecognizeSwipeInView(self,
+                                               gestureRecognizer: panGestureRecognizer,
+                                               length: length,
+                                               angle: angle,
+                                               center: center)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
@@ -66,8 +77,21 @@ class GestureView: UIView, UIGestureRecognizerDelegate {
         return CGFloat(bearingRadians)
     }
 
+    fileprivate func distanceBetweenTwoPoints(_ firstPoint: CGPoint, secondPoint: CGPoint) -> CGFloat {
+        let xDist = firstPoint.x - secondPoint.x
+        let yDist = firstPoint.y - secondPoint.y
+        return CGFloat(sqrt((xDist * xDist) + (yDist * yDist)))
+    }
+
     fileprivate func centerBetweenTwoPoints(_ firstPoint: CGPoint, secondPoint: CGPoint) -> CGPoint {
-        let midPoint = CGPoint(x: (firstPoint.x + secondPoint.x)/2, y: (firstPoint.y + secondPoint.y)/2)
-        return midPoint
+        return CGPoint(x: (firstPoint.x + secondPoint.x)/2, y: (firstPoint.y + secondPoint.y)/2)
+    }
+
+    fileprivate func endpointFromLengthAndAngle(initialPoint: CGPoint,
+                                                length: CGFloat,
+                                                angle: CGFloat) -> CGPoint {
+        let dx = length * cos(angle)
+        let dy = length * sin(angle)
+        return CGPoint(x: initialPoint.x + dx, y: initialPoint.y + dy)
     }
 }

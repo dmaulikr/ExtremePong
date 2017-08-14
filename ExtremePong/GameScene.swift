@@ -149,30 +149,65 @@ class GameScene: SKScene {
     }
 
     fileprivate func placePaddle(_ paddle: Paddle, player: Player, position: CGPoint, angle: CGFloat) {
+        if self.playing {
+            player.addPaddle(paddle, completion: { 
+                paddle.zRotation = angle
+                paddle.position = position
+                self.addChild(paddle)
+
+                if !self.paddleSafeToPlace(paddle) {
+                    player.removePaddle(paddle)
+                    paddle.removeFromParent()
+                }
+            })
+        }
+    }
+
+    fileprivate func placeDrawnPaddle(_ paddle: Paddle,
+                                      player: Player,
+                                      position: CGPoint,
+                                      angle: CGFloat) {
         if self.playing && player.canAddPaddle(paddle) {
             paddle.zRotation = angle
             paddle.position = position
-            paddle.xScale = player.paddleXScale
             self.addChild(paddle)
 
-            guard let
-                p1Goal = self.childNode(withName: self.p1GoalName),
-                let p2Goal = self.childNode(withName: self.p2GoalName),
-                let midline = self.childNode(withName: self.midlineName),
-                let ball = self.childNode(withName: BallName)
-                else {
-                    return
+            guard let drawnPaddle = player.drawnPaddle else {
+                player.drawnPaddle = paddle
+                return
             }
 
-            if paddle.intersects(p1Goal)
-                || paddle.intersects(p2Goal)
-                || paddle.intersects(midline)
-                || paddle.intersects(ball) {
-
-                player.removePaddle(paddle)
+            drawnPaddle.removeFromParent()
+            if !self.paddleSafeToPlace(paddle) {
                 paddle.removeFromParent()
+                self.addChild(drawnPaddle)
+            } else {
+                player.drawnPaddle = paddle
             }
+
+            //make sure to add the Player.drawnPaddle to list of paddles but with physics rather than a new calculation
         }
+    }
+
+    fileprivate func paddleSafeToPlace(_ paddle: Paddle) -> Bool {
+        guard let
+            p1Goal = self.childNode(withName: self.p1GoalName),
+            let p2Goal = self.childNode(withName: self.p2GoalName),
+            let midline = self.childNode(withName: self.midlineName),
+            let ball = self.childNode(withName: BallName)
+            else {
+                return false
+        }
+
+        var safeToPlace = true;
+        if paddle.intersects(p1Goal)
+            || paddle.intersects(p2Goal)
+            || paddle.intersects(midline)
+            || paddle.intersects(ball) {
+
+            safeToPlace = false
+        }
+        return safeToPlace
     }
 
     fileprivate func setupPhysics() {
@@ -274,18 +309,25 @@ class GameScene: SKScene {
     }
 
     @objc fileprivate func handlePanForPowerEffect(_ recognizer : UIPanGestureRecognizer) {
-        if recognizer.state == .began {
+        switch recognizer.state {
+        case .began:
             var touchLocation = recognizer.location(in: recognizer.view)
             touchLocation = self.convertPoint(fromView: touchLocation)
 
             self.selectNodeForTouch(touchLocation)
-        } else if recognizer.state == .changed {
+            break
+
+        case .changed:
             var translation = recognizer.translation(in: recognizer.view!)
             translation = CGPoint(x: translation.x, y: -translation.y)
 
             self.panForTranslation(translation)
 
             recognizer.setTranslation(CGPoint.zero, in: recognizer.view)
+            break
+
+        default:
+            break
         }
     }
 
@@ -322,30 +364,54 @@ class GameScene: SKScene {
 
 extension GameScene: GestureViewDelegate {
 
-    func didRecognizeSwipeInView(_ gestureView: GestureView, angle: CGFloat, center: CGPoint) {
+    func didRecognizeSwipeInView(_ gestureView: GestureView,
+                                 gestureRecognizer: UIGestureRecognizer,
+                                 length: CGFloat,
+                                 angle: CGFloat,
+                                 center: CGPoint) {
         if self.playing {
-            let paddle = Paddle.paddle()
-
             guard let view = self.view else {
                 return
             }
+            let player = self.p1View == gestureView ? self.player1 : self.player2
+
             let tempPoint = view.convert(center, from: gestureView)
-            let scenePosition = view.convert(tempPoint, to: self)
+            let positionInScene = view.convert(tempPoint, to: self)
             //adding negative to angle since UIKit coordinates are flipped compared to SceneKit coordinates
-            let sceneAngle = -angle
+            let angleInScene = -angle
 
-            if self.p1View == gestureView {
+            var paddle: Paddle
+            switch gestureRecognizer.state {
+            case .changed:
+                paddle = Paddle.drawnPaddle(length)
+                self.placeDrawnPaddle(paddle,
+                                      player: player,
+                                      position: positionInScene,
+                                      angle: angleInScene)
+                break
+            case .ended:
+                paddle = Paddle.paddle(length)
                 self.placePaddle(paddle,
-                                 player: self.player1,
-                                 position: scenePosition,
-                                 angle: sceneAngle)
-
-            } else if self.p2View == gestureView {
-                self.placePaddle(paddle,
-                                 player: self.player2,
-                                 position: scenePosition,
-                                 angle: sceneAngle)
+                                 player: player,
+                                 position: positionInScene,
+                                 angle: angleInScene)
+                break
+            default:
+                break
             }
+
+//            if self.p1View == gestureView {
+//                self.placePaddle(paddle,
+//                                 player: self.player1,
+//                                 position: positionInScene,
+//                                 angle: angleInScene)
+//
+//            } else if self.p2View == gestureView {
+//                self.placePaddle(paddle,
+//                                 player: self.player2,
+//                                 position: positionInScene,
+//                                 angle: angleInScene)
+//            }
         }
     }
 
@@ -356,6 +422,12 @@ extension GameScene: GestureViewDelegate {
             return false
         }
         return true
+    }
+
+    func maxTranslationInGestureView(_ gestureView: GestureView) -> CGFloat {
+        let player = self.p1View == gestureView ? self.player1 : self.player2
+        let maxLength = MaximumPaddleLength * player.paddleXScale
+        return maxLength
     }
 }
 
@@ -378,7 +450,7 @@ extension GameScene: SKPhysicsContactDelegate {
         }
 
         if firstBody.categoryBitMask == BodyCategory.ball.rawValue && secondBody.categoryBitMask == BodyCategory.paddle.rawValue {
-            //check that ball and paddlfe collided
+            //check that ball and paddle collided
             if let playerAndPaddle = self.checkForMatchingPaddle(secondBody) {
                 let player = playerAndPaddle.player
                 let paddle = playerAndPaddle.paddle
