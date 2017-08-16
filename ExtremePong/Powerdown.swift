@@ -17,7 +17,8 @@ enum PowerdownType: UInt32 {
     fileprivate static let count: PowerdownType.RawValue = {
         // find the maximum enum value
         var maxValue: UInt32 = 0
-        while let _ = PowerdownType(rawValue: maxValue) { maxValue += 1
+        while let _ = PowerdownType(rawValue: maxValue) {
+            maxValue += 1
         }
         return maxValue
     }()
@@ -39,40 +40,23 @@ class Powerdown: PowerEffect {
     }
 
     fileprivate func setupPowerdown() {
-        self.fillColor = SKColor.red
-        self.strokeColor = SKColor.lightGray
-        self.lineWidth = 2.0
-
-        guard let path = self.path else {
-            return
-        }
-        let physicsBody = SKPhysicsBody(polygonFrom: path)
-        physicsBody.isDynamic = true
-        physicsBody.allowsRotation = false
-        physicsBody.categoryBitMask = BodyCategory.powerdown.rawValue
-        physicsBody.collisionBitMask = BodyCategory.border.rawValue
-        self.physicsBody = physicsBody
-
+        self.setupPowerEffect(SKColor.red, bitMaskCategory: BodyCategory.powerdown.rawValue)
         self.powerdownType = PowerdownType.randomPowerup()
         self.definePowerdown(self.powerdownType!)
     }
 
     fileprivate func definePowerdown(_ powerdown: PowerdownType) {
-        let powerdownLabel = SKLabelNode(fontNamed: "AvenirNext-Bold")
-        powerdownLabel.fontSize = 18.0
-        powerdownLabel.fontColor = SKColor.white
-
+        var labelText: String
         switch powerdown {
         case .longGoal:
-            powerdownLabel.text = "<G>"
+            labelText = "<G>"
         case .minusPaddle:
-            powerdownLabel.text = "P-"
+            labelText = "P-"
         case .shortPaddles:
-            powerdownLabel.text = ">P<"
+            labelText = ">P<"
         }
 
-        self.addChild(powerdownLabel)
-        powerdownLabel.horizontalAlignmentMode = .center
-        powerdownLabel.verticalAlignmentMode = .center
+        let label = self.createLabel(withText: labelText)
+        self.addChild(label)
     }
 }

@@ -24,8 +24,8 @@ private let Player2Name = "player2"
 
 class GameScene: SKScene {
 
-    fileprivate let player1 = Player(name: Player1Name)
-    fileprivate let player2 = Player(name: Player2Name)
+    fileprivate let player1 = Player(name: Player1Name, color: Player1Color)
+    fileprivate let player2 = Player(name: Player2Name, color: Player2Color)
 
     fileprivate var p1View = GestureView(frame: CGRect.zero)
     fileprivate var p2View = GestureView(frame: CGRect.zero)
@@ -108,14 +108,12 @@ class GameScene: SKScene {
 
             self.player2.createPlayerGoal(goalRect, position: goalPosition)
             self.player2.goal.name = self.p2GoalName
-            self.player2.goal.strokeColor = Player2Color
             self.addChild(self.player2.goal)
 
             goalPosition = CGPoint(x: viewFrame.midX - goalWidth/2, y: -goalYOffset)
 
             self.player1.createPlayerGoal(goalRect, position: goalPosition)
             self.player1.goal.name = self.p1GoalName
-            self.player1.goal.strokeColor = Player1Color
             self.addChild(self.player1.goal)
         }
     }
@@ -125,12 +123,10 @@ class GameScene: SKScene {
         var labelWidth = self.player1.score.frame.width
         let labelHeight = self.player1.score.frame.height
         self.player1.score.position = CGPoint(x: view.frame.width - labelWidth, y: view.frame.midY - labelHeight - padding)
-        self.player1.score.fontColor = Player1Color
         self.addChild(self.player1.score)
 
         labelWidth = self.player2.score.frame.width
         self.player2.score.position = CGPoint(x: view.frame.width - labelWidth, y: view.frame.midY + padding)
-        self.player2.score.fontColor = Player2Color
         self.addChild(self.player2.score)
     }
 
@@ -157,13 +153,18 @@ class GameScene: SKScene {
     fileprivate func createBall() {
         let ball = Ball.ball()
 
+        let ballTrail = SKEmitterNode(fileNamed: "BallTrail.sks")!
+        ballTrail.targetNode = self
+        ballTrail.position = ball.position
+        ball.addChild(ballTrail)
+
         guard let viewFrame = self.view?.frame else {
             return
         }
         ball.position = CGPoint(x: viewFrame.midX, y: viewFrame.midY)
         self.addChild(ball)
-        var dy: Int = 0
-        let dx = Int(arc4random_uniform(6) + 4)
+        var dy: CGFloat = 0
+        let dx = CGFloat(arc4random_uniform(6) + 4)
 
         let positiveOrNegative = Int(arc4random_uniform(2))
         if positiveOrNegative == 0 {
@@ -172,7 +173,8 @@ class GameScene: SKScene {
             dy = dx - 10
         }
 
-        let impulse = CGVector(dx: dx, dy: dy)
+        let scale: CGFloat = 1.5
+        let impulse = CGVector(dx: dx*scale, dy: dy*scale)
         ball.physicsBody?.applyImpulse(impulse)
         self.playing = true
     }
@@ -356,6 +358,23 @@ class GameScene: SKScene {
         }
         return false
     }
+
+    fileprivate func addPaddleExplosionEmitter(_ position: CGPoint, color: SKColor) {
+        let paddleExplosion = SKEmitterNode(fileNamed: "PaddleExplosion.sks")!
+        paddleExplosion.targetNode = self
+        paddleExplosion.position = position
+        paddleExplosion.particleColor = color
+        paddleExplosion.particleColorBlendFactor = 1.0
+        paddleExplosion.particleColorSequence = nil
+
+        let addAction = SKAction.run { self.addChild(paddleExplosion) }
+        let waitAction = SKAction.wait(forDuration: TimeInterval(1))
+        let removeAction = SKAction.run { paddleExplosion.removeFromParent() }
+        let actionSequence = SKAction.sequence([addAction,
+                                                waitAction,
+                                                removeAction])
+        self.run(actionSequence)
+    }
 }
 
 // MARK: - GestureViewDelegate
@@ -399,8 +418,6 @@ extension GameScene: GestureViewDelegate {
     }
 
     func shouldRecognizeSwipeInView(_ gestureView: GestureView, touch: UITouch) -> Bool {
-        print("shouldRecognize touch delegate")
-
         if self.isPowerEffectTouched(touch) {
             return false
         }
@@ -419,8 +436,6 @@ extension GameScene: GestureViewDelegate {
 extension GameScene: SKPhysicsContactDelegate {
 
     func didBegin(_ contact: SKPhysicsContact) {
-        print("contact")
-
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
 
@@ -437,6 +452,8 @@ extension GameScene: SKPhysicsContactDelegate {
             if let playerAndPaddle = self.checkForMatchingPaddle(secondBody) {
                 let player = playerAndPaddle.player
                 let paddle = playerAndPaddle.paddle
+
+                self.addPaddleExplosionEmitter(paddle.position, color: player.color)
 
                 player.removePaddle(paddle)
                 paddle.removeFromParent()

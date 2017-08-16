@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47760DC91F429AD700042E41 /* PaddleExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47760DC81F429AD700042E41 /* PaddleExplosion.sks */; };
 		47C949041F3D3FEC00AAE6FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949031F3D3FEC00AAE6FA /* AppDelegate.swift */; };
 		47C949061F3D3FEC00AAE6FA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47C949051F3D3FEC00AAE6FA /* GameScene.sks */; };
 		47C949081F3D3FEC00AAE6FA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47C949071F3D3FEC00AAE6FA /* Actions.sks */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		47760DC81F429AD700042E41 /* PaddleExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PaddleExplosion.sks; sourceTree = "<group>"; };
 		47C949001F3D3FEC00AAE6FA /* ExtremePong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExtremePong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C949031F3D3FEC00AAE6FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47C949051F3D3FEC00AAE6FA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				47C949401F3D455000AAE6FA /* BallTrail.sks */,
+				47760DC81F429AD700042E41 /* PaddleExplosion.sks */,
 			);
 			name = Particles;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				47C9490F1F3D3FEC00AAE6FA /* Main.storyboard in Resources */,
 				47C949061F3D3FEC00AAE6FA /* GameScene.sks in Resources */,
 				47C949111F3D3FEC00AAE6FA /* Assets.xcassets in Resources */,
+				47760DC91F429AD700042E41 /* PaddleExplosion.sks in Resources */,
 				47C949411F3D455000AAE6FA /* BallTrail.sks in Resources */,
 				47C949141F3D3FEC00AAE6FA /* LaunchScreen.storyboard in Resources */,
 				47C949081F3D3FEC00AAE6FA /* Actions.sks in Resources */,
@@ -496,6 +500,7 @@
 				47C949251F3D3FEC00AAE6FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		47C949261F3D3FEC00AAE6FA /* Build configuration list for PBXNativeTarget "ExtremePongTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +509,7 @@
 				47C949281F3D3FEC00AAE6FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

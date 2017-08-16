@@ -19,7 +19,8 @@ enum PowerupType: UInt32 {
     private static let count: PowerupType.RawValue = {
         // find the maximum enum value
         var maxValue: UInt32 = 0
-        while let _ = PowerupType(rawValue: maxValue) { maxValue += 1
+        while let _ = PowerupType(rawValue: maxValue) {
+            maxValue += 1
         }
         return maxValue
     }()
@@ -41,48 +42,27 @@ class Powerup: PowerEffect {
     }
 
     fileprivate func setupPowerup() {
-        self.fillColor = SKColor.green
-        self.strokeColor = SKColor.lightGray
-        self.lineWidth = 2.0
-
-        guard let path = self.path else {
-            assert(false, "There should always be a valid path")
-            return
-        }
-        let physicsBody = SKPhysicsBody(polygonFrom: path)
-        physicsBody.isDynamic = true
-        physicsBody.restitution = 1
-        physicsBody.friction = 0
-        physicsBody.linearDamping = 0
-        physicsBody.angularDamping = 0
-        physicsBody.allowsRotation = false
-        physicsBody.categoryBitMask = BodyCategory.powerup.rawValue
-        physicsBody.collisionBitMask = BodyCategory.border.rawValue
-        self.physicsBody = physicsBody
-
+        self.setupPowerEffect(SKColor.green, bitMaskCategory: BodyCategory.powerup.rawValue)
         self.powerupType = PowerupType.randomPowerup()
         self.definePowerup(self.powerupType!)
     }
 
     fileprivate func definePowerup(_ powerup: PowerupType) {
-        let powerupLabel = SKLabelNode(fontNamed: "AvenirNext-Bold")
-        powerupLabel.fontSize = 18.0
-        powerupLabel.fontColor = SKColor.white
-
+        var labelText: String
         switch powerup {
         case .extraPaddle:
-            powerupLabel.text = "P+"
+            labelText = "P+"
         case .longPaddles:
-            powerupLabel.text = "<P>"
+            labelText = "<P>"
         case .shortGoal:
-            powerupLabel.text = ">G<"
+            labelText = ">G<"
         }
 
-        self.addChild(powerupLabel)
-        powerupLabel.horizontalAlignmentMode = .center
-        powerupLabel.verticalAlignmentMode = .center
+        let label = self.createLabel(withText: labelText)
+        self.addChild(label)
     }
 
+    //eventually make powerups/powerdowns timed effects via a timer
     func startTimer() {
         timer.fire()
     }

@@ -18,6 +18,7 @@ class Player {
     fileprivate var paddleCount: Int
     var paddleXScale: CGFloat = 1.0
     let name: String
+    let color: SKColor
     let score: SKLabelNode
     var goal = SKShapeNode(rect: CGRect.zero)
     var drawnPaddle: Paddle?
@@ -25,10 +26,12 @@ class Player {
     var powerups = [Powerup]()
     var powerdowns = [Powerdown]()
 
-    init(name: String) {
+    init(name: String, color: SKColor) {
         self.paddleCount = DefaultPaddleCount
         self.name = name
+        self.color = color
         self.score = SKLabelNode(text: "0")
+        self.score.fontColor = color
     }
 
     func canAddPaddle() -> Bool {
@@ -164,7 +167,7 @@ class Player {
     func createPlayerGoal(_ rect: CGRect, position: CGPoint) {
         let goal = SKShapeNode(rect: rect, cornerRadius: 5)
         goal.position = position
-        goal.strokeColor = SKColor.lightGray
+        goal.strokeColor = self.color
         goal.lineWidth = 2
         goal.name = "goal"
 
