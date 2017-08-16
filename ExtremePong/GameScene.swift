@@ -44,6 +44,8 @@ class GameScene: SKScene {
 
     fileprivate var powerEffectTimer = Timer()
 
+    // MARK: Entry Point
+
     override func didMove(to view: SKView) {
         super.didMove(to: view)
 
@@ -67,6 +69,8 @@ class GameScene: SKScene {
 
         self.startPowerEffectTimer()
     }
+
+    // MARK: Setup
 
     fileprivate func setupPhysics() {
         self.physicsWorld.contactDelegate = self
@@ -130,25 +134,7 @@ class GameScene: SKScene {
         self.addChild(self.player2.score)
     }
 
-    fileprivate func startPowerEffectTimer() {
-        self.powerEffectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GameScene.createRandomPowerEffect), userInfo: nil, repeats: false)
-        self.powerEffect?.removeFromParent()
-        self.powerEffect = nil
-    }
-
-    fileprivate func checkForMatchingPaddle(_ physicsBody: SKPhysicsBody) -> (player: Player, paddle: Paddle)? {
-        for paddle in self.player1.paddles {
-            if paddle.physicsBody == physicsBody {
-                return (self.player1, paddle)
-            }
-        }
-        for paddle in self.player2.paddles {
-            if paddle.physicsBody == physicsBody {
-                return (self.player2, paddle)
-            }
-        }
-        return nil
-    }
+    // MARK: Node Creation
 
     fileprivate func createBall() {
         let ball = Ball.ball(emitterTargetNode: self)
@@ -192,6 +178,14 @@ class GameScene: SKScene {
             self.addChild(self.powerEffect!)
         }
     }
+
+    fileprivate func startPowerEffectTimer() {
+        self.powerEffectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GameScene.createRandomPowerEffect), userInfo: nil, repeats: false)
+        self.powerEffect?.removeFromParent()
+        self.powerEffect = nil
+    }
+
+    // MARK: Paddle Logic
 
     fileprivate func placeDrawnPaddle(_ paddle: Paddle,
                                       forPlayer player: Player,
@@ -249,32 +243,38 @@ class GameScene: SKScene {
         return safeToPlace
     }
 
-    fileprivate func clearField() {
-        self.playing = false
-        self.player1.clearAllPaddles()
-        self.player2.clearAllPaddles()
-        self.player1.removeAllEffects()
-        self.player2.removeAllEffects()
-
-        self.powerEffectTimer.invalidate()
-        self.powerEffect?.removeFromParent()
-        self.powerEffect = nil
-
-        let ball = self.childNode(withName: BallName)
-        ball?.removeFromParent()
-    }
-
-    fileprivate func isLocatedInBottomHalfView(_ node: SKNode) -> Bool {
-        let position = node.position
-
-        if let viewFrame = self.view?.frame {
-            let convertedPoint = self.convertPoint(fromView: CGPoint(x: 0, y: viewFrame.midY))
-            if position.y < convertedPoint.y {
-                return true
+    fileprivate func checkForMatchingPaddle(_ physicsBody: SKPhysicsBody) -> (player: Player, paddle: Paddle)? {
+        for paddle in self.player1.paddles {
+            if paddle.physicsBody == physicsBody {
+                return (self.player1, paddle)
             }
         }
-        return false
+        for paddle in self.player2.paddles {
+            if paddle.physicsBody == physicsBody {
+                return (self.player2, paddle)
+            }
+        }
+        return nil
     }
+
+    fileprivate func addPaddleExplosionEmitter(_ position: CGPoint, color: SKColor) {
+        let paddleExplosion = SKEmitterNode(fileNamed: "PaddleExplosion.sks")!
+        paddleExplosion.targetNode = self
+        paddleExplosion.position = position
+        paddleExplosion.particleColor = color
+        paddleExplosion.particleColorBlendFactor = 1.0
+        paddleExplosion.particleColorSequence = nil
+
+        let addAction = SKAction.run { self.addChild(paddleExplosion) }
+        let waitAction = SKAction.wait(forDuration: TimeInterval(1))
+        let removeAction = SKAction.run { paddleExplosion.removeFromParent() }
+        let actionSequence = SKAction.sequence([addAction,
+                                                waitAction,
+                                                removeAction])
+        self.run(actionSequence)
+    }
+
+    // MARK: Touch Events
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -338,21 +338,33 @@ class GameScene: SKScene {
         return false
     }
 
-    fileprivate func addPaddleExplosionEmitter(_ position: CGPoint, color: SKColor) {
-        let paddleExplosion = SKEmitterNode(fileNamed: "PaddleExplosion.sks")!
-        paddleExplosion.targetNode = self
-        paddleExplosion.position = position
-        paddleExplosion.particleColor = color
-        paddleExplosion.particleColorBlendFactor = 1.0
-        paddleExplosion.particleColorSequence = nil
+    // MARK: Misc
 
-        let addAction = SKAction.run { self.addChild(paddleExplosion) }
-        let waitAction = SKAction.wait(forDuration: TimeInterval(1))
-        let removeAction = SKAction.run { paddleExplosion.removeFromParent() }
-        let actionSequence = SKAction.sequence([addAction,
-                                                waitAction,
-                                                removeAction])
-        self.run(actionSequence)
+    fileprivate func clearField() {
+        self.playing = false
+        self.player1.clearAllPaddles()
+        self.player2.clearAllPaddles()
+        self.player1.removeAllEffects()
+        self.player2.removeAllEffects()
+
+        self.powerEffectTimer.invalidate()
+        self.powerEffect?.removeFromParent()
+        self.powerEffect = nil
+
+        let ball = self.childNode(withName: BallName)
+        ball?.removeFromParent()
+    }
+
+    fileprivate func isLocatedInBottomHalfView(_ node: SKNode) -> Bool {
+        let position = node.position
+
+        if let viewFrame = self.view?.frame {
+            let convertedPoint = self.convertPoint(fromView: CGPoint(x: 0, y: viewFrame.midY))
+            if position.y < convertedPoint.y {
+                return true
+            }
+        }
+        return false
     }
 }
 
