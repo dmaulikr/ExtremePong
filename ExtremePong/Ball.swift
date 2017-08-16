@@ -13,14 +13,14 @@ let BallName = "ball"
 
 class Ball: SKShapeNode {
 
-    static func ball() -> Ball {
+    static func ball(emitterTargetNode node: SKNode) -> Ball {
         let ball = Ball(circleOfRadius: BallRadius)
-        ball.setupBall()
+        ball.setupBall(emitterTargetNode: node)
         ball.name = BallName
         return ball
     }
 
-    fileprivate func setupBall() {
+    fileprivate func setupBall(emitterTargetNode node: SKNode) {
         self.fillColor = SKColor.white
         guard let path = self.path else {
             assert(false, "There should always be a valid path")
@@ -37,5 +37,9 @@ class Ball: SKShapeNode {
         physicsBody.collisionBitMask = BodyCategory.paddle.rawValue | BodyCategory.border.rawValue
         physicsBody.contactTestBitMask = BodyCategory.paddle.rawValue | BodyCategory.border.rawValue | BodyCategory.goal.rawValue
         self.physicsBody = physicsBody
+
+        let ballTrail = SKEmitterNode(fileNamed: "BallTrail.sks")!
+        ballTrail.targetNode = node
+        self.addChild(ballTrail)
     }
 }

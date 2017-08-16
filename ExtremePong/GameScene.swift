@@ -151,12 +151,7 @@ class GameScene: SKScene {
     }
 
     fileprivate func createBall() {
-        let ball = Ball.ball()
-
-        let ballTrail = SKEmitterNode(fileNamed: "BallTrail.sks")!
-        ballTrail.targetNode = self
-        ballTrail.position = ball.position
-        ball.addChild(ballTrail)
+        let ball = Ball.ball(emitterTargetNode: self)
 
         guard let viewFrame = self.view?.frame else {
             return
@@ -235,7 +230,6 @@ class GameScene: SKScene {
                 self.addChild(paddle)
 
                 if !self.paddleSafeToPlace(paddle) {
-                    paddle.removeFromParent()
                     player.removePaddle(paddle)
                 }
             })
@@ -456,13 +450,12 @@ extension GameScene: SKPhysicsContactDelegate {
                 self.addPaddleExplosionEmitter(paddle.position, color: player.color)
 
                 player.removePaddle(paddle)
-                paddle.removeFromParent()
             }
         }
 
         if firstBody.categoryBitMask == BodyCategory.ball.rawValue && secondBody.categoryBitMask == BodyCategory.goal.rawValue {
             //check for a goal
-            if playing {
+            if self.playing {
                 if let
                     innerGoal = secondBody.node,
                     let goal = innerGoal.parent
@@ -484,7 +477,7 @@ extension GameScene: SKPhysicsContactDelegate {
 
         //Powerup contact with goal
         if firstBody.categoryBitMask == BodyCategory.powerup.rawValue && secondBody.categoryBitMask == BodyCategory.goal.rawValue {
-            if playing {
+            if self.playing {
                 if let powerup = firstBody.node as? Powerup {
                     if let
                         innerGoal = secondBody.node,

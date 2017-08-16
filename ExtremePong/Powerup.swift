@@ -33,7 +33,7 @@ enum PowerupType: UInt32 {
 
 class Powerup: PowerEffect {
 
-    var powerupType: PowerupType? = nil
+    private(set) var powerupType: PowerupType? = nil
 
     static func powerup() -> Powerup {
         let powerup = Powerup(circleOfRadius: PowerEffectRadius)

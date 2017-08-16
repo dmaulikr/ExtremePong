@@ -11,20 +11,23 @@ import SpriteKit
 let Player1Color = SKColor(red: 255/255.0, green: 148/255.0, blue: 26/255.0, alpha: 1.0)
 let Player2Color = SKColor(red: 18/255.0, green: 174/255.0, blue: 252/255.0, alpha: 1.0)
 
-let DefaultPaddleCount = 2
+let DefaultPaddleCount = 1
 
 class Player {
 
-    fileprivate var paddleCount: Int
-    var paddleXScale: CGFloat = 1.0
     let name: String
     let color: SKColor
     let score: SKLabelNode
-    var goal = SKShapeNode(rect: CGRect.zero)
+
+    private(set) var paddleCount: Int
+    private(set) var paddleXScale: CGFloat = 1.0
+    private(set) var goal = SKShapeNode(rect: CGRect.zero)
+    private(set) var paddles = [Paddle]()
+    private var powerups = [Powerup]()
+    private var powerdowns = [Powerdown]()
+    private var paddleAdditionTimer = Timer()
+
     var drawnPaddle: Paddle?
-    var paddles = [Paddle]()
-    var powerups = [Powerup]()
-    var powerdowns = [Powerdown]()
 
     init(name: String, color: SKColor) {
         self.paddleCount = DefaultPaddleCount
@@ -32,10 +35,12 @@ class Player {
         self.color = color
         self.score = SKLabelNode(text: "0")
         self.score.fontColor = color
+
+        paddleAdditionTimer.fire()
     }
 
     func canAddPaddle() -> Bool {
-        return self.paddles.count < self.paddleCount
+        return !self.paddleAdditionTimer.isValid
     }
 
     func addPaddle(completion: (_ paddle: Paddle) -> Void) {
@@ -44,10 +49,29 @@ class Player {
         }
         if self.canAddPaddle() {
             let paddle = Paddle.paddle(fromPaddle: drawnPaddle)
-            self.paddles.append(paddle)
+
+            if self.paddleCount == 1 {
+                self.clearAllPaddles()
+                self.paddles.append(paddle)
+            } else {
+                if self.paddleCount == self.paddles.count {
+                    self.removePaddle(atIndex: 0)
+                }
+                self.paddles.append(paddle)
+            }
+
             self.drawnPaddle?.removeFromParent()
             self.drawnPaddle = nil
+            self.paddleAdditionTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in })
             completion(paddle)
+        }
+    }
+
+    func removePaddle(atIndex index: Int) {
+        if !self.paddles.isEmpty {
+            let paddle = self.paddles[index]
+            paddle.removeFromParent()
+            self.paddles.remove(at: index)
         }
     }
 
@@ -55,13 +79,14 @@ class Player {
         if let index = self.paddles.index(of: paddle) {
             self.paddles.remove(at: index)
         }
+        paddle.removeFromParent()
     }
 
     func clearAllPaddles() {
-        for paddle in self.paddles {
-            paddle.removeFromParent()
-            self.removePaddle(paddle)
+        for (index, _) in self.paddles.enumerated() {
+            self.removePaddle(atIndex: index)
         }
+
         self.drawnPaddle?.removeFromParent()
         self.drawnPaddle = nil
     }
@@ -69,7 +94,6 @@ class Player {
     func addPowerup(_ powerup: Powerup) {
         self.powerups.append(powerup)
         self.addEffect(powerup)
-        //        powerup.timer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "removePowerUpEffect:", userInfo: nil, repeats: false)
     }
 
     func addPowerdown(_ powerdown: Powerdown) {

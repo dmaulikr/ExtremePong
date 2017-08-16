@@ -22,7 +22,6 @@
 		47C949331F3D427700AAE6FA /* PowerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949321F3D427700AAE6FA /* PowerEffect.swift */; };
 		47C949351F3D429100AAE6FA /* Powerup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949341F3D429100AAE6FA /* Powerup.swift */; };
 		47C949371F3D42A600AAE6FA /* Powerdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949361F3D42A600AAE6FA /* Powerdown.swift */; };
-		47C949391F3D42BD00AAE6FA /* Particle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C949381F3D42BD00AAE6FA /* Particle.swift */; };
 		47C9493B1F3D42D500AAE6FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9493A1F3D42D500AAE6FA /* Player.swift */; };
 		47C9493D1F3D42EC00AAE6FA /* GestureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9493C1F3D42EC00AAE6FA /* GestureView.swift */; };
 		47C949411F3D455000AAE6FA /* BallTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 47C949401F3D455000AAE6FA /* BallTrail.sks */; };
@@ -58,7 +57,6 @@
 		47C949321F3D427700AAE6FA /* PowerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PowerEffect.swift; sourceTree = "<group>"; };
 		47C949341F3D429100AAE6FA /* Powerup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Powerup.swift; sourceTree = "<group>"; };
 		47C949361F3D42A600AAE6FA /* Powerdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Powerdown.swift; sourceTree = "<group>"; };
-		47C949381F3D42BD00AAE6FA /* Particle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Particle.swift; sourceTree = "<group>"; };
 		47C9493A1F3D42D500AAE6FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		47C9493C1F3D42EC00AAE6FA /* GestureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureView.swift; sourceTree = "<group>"; };
 		47C949401F3D455000AAE6FA /* BallTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BallTrail.sks; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 				47C949321F3D427700AAE6FA /* PowerEffect.swift */,
 				47C949341F3D429100AAE6FA /* Powerup.swift */,
 				47C949361F3D42A600AAE6FA /* Powerdown.swift */,
-				47C949381F3D42BD00AAE6FA /* Particle.swift */,
 				47C9493A1F3D42D500AAE6FA /* Player.swift */,
 				47C9493C1F3D42EC00AAE6FA /* GestureView.swift */,
 			);
@@ -280,7 +277,6 @@
 				47C9490A1F3D3FEC00AAE6FA /* GameScene.swift in Sources */,
 				47C949311F3D420600AAE6FA /* Paddle.swift in Sources */,
 				47C9490C1F3D3FEC00AAE6FA /* GameViewController.swift in Sources */,
-				47C949391F3D42BD00AAE6FA /* Particle.swift in Sources */,
 				47C949331F3D427700AAE6FA /* PowerEffect.swift in Sources */,
 				47C949351F3D429100AAE6FA /* Powerup.swift in Sources */,
 				47C949041F3D3FEC00AAE6FA /* AppDelegate.swift in Sources */,

@@ -31,7 +31,7 @@ enum PowerdownType: UInt32 {
 
 class Powerdown: PowerEffect {
 
-    var powerdownType: PowerdownType? = nil
+    private(set) var powerdownType: PowerdownType? = nil
 
     static func powerdown() -> Powerdown {
         let powerdown = Powerdown(circleOfRadius: PowerEffectRadius)
