@@ -39,6 +39,16 @@ class Player {
         paddleAdditionTimer.fire()
     }
 
+    func incrementScore() {
+        if let scoreText = self.score.text {
+            guard var score = Int(scoreText) else {
+                return
+            }
+            score += 1
+            self.score.text = "\(score)"
+        }
+    }
+
     func canAddPaddle() -> Bool {
         return !self.paddleAdditionTimer.isValid
     }

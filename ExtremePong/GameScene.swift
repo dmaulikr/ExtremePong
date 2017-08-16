@@ -65,7 +65,7 @@ class GameScene: SKScene {
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(GameScene.handlePanForPowerEffect(_:)))
         self.view!.addGestureRecognizer(gestureRecognizer)
 
-        self.startTimer()
+        self.startPowerEffectTimer()
     }
 
     fileprivate func setupPhysics() {
@@ -130,7 +130,7 @@ class GameScene: SKScene {
         self.addChild(self.player2.score)
     }
 
-    fileprivate func startTimer() {
+    fileprivate func startPowerEffectTimer() {
         self.powerEffectTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(GameScene.createRandomPowerEffect), userInfo: nil, repeats: false)
         self.powerEffect?.removeFromParent()
         self.powerEffect = nil
@@ -162,11 +162,7 @@ class GameScene: SKScene {
         let dx = CGFloat(arc4random_uniform(6) + 4)
 
         let positiveOrNegative = Int(arc4random_uniform(2))
-        if positiveOrNegative == 0 {
-            dy = 10 - dx
-        } else {
-            dy = dx - 10
-        }
+        positiveOrNegative == 0 ? (dy = 10 - dx) : (dy = dx - 10)
 
         let scale: CGFloat = 1.5
         let impulse = CGVector(dx: dx*scale, dy: dy*scale)
@@ -176,11 +172,7 @@ class GameScene: SKScene {
 
     @objc fileprivate func createRandomPowerEffect() {
         let rand = arc4random_uniform(2)
-        if rand == 0 {
-            self.createPowerup()
-        } else {
-            self.createPowerdown()
-        }
+        rand == 0 ? self.createPowerup() : self.createPowerdown()
     }
 
     fileprivate func createPowerup() {
@@ -258,8 +250,15 @@ class GameScene: SKScene {
     }
 
     fileprivate func clearField() {
+        self.playing = false
         self.player1.clearAllPaddles()
         self.player2.clearAllPaddles()
+        self.player1.removeAllEffects()
+        self.player2.removeAllEffects()
+
+        self.powerEffectTimer.invalidate()
+        self.powerEffect?.removeFromParent()
+        self.powerEffect = nil
 
         let ball = self.childNode(withName: BallName)
         ball?.removeFromParent()
@@ -277,22 +276,11 @@ class GameScene: SKScene {
         return false
     }
 
-    fileprivate func updateScoreForPlayer(_ player: Player) {
-        if let scoreText = player.score.text {
-            guard var score = Int(scoreText) else {
-                return
-            }
-            score += 1
-            player.score.text = "\(score)"
-            self.clearField()
-        }
-    }
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         if !self.playing {
             self.createBall()
-            self.startTimer()
+            self.startPowerEffectTimer()
         }
     }
 
@@ -301,16 +289,13 @@ class GameScene: SKScene {
         case .began:
             var touchLocation = recognizer.location(in: recognizer.view)
             touchLocation = self.convertPoint(fromView: touchLocation)
-
             self.selectNodeForTouch(touchLocation)
             break
 
         case .changed:
             var translation = recognizer.translation(in: recognizer.view!)
             translation = CGPoint(x: translation.x, y: -translation.y)
-
             self.panForTranslation(translation)
-
             recognizer.setTranslation(CGPoint.zero, in: recognizer.view)
             break
 
@@ -460,17 +445,8 @@ extension GameScene: SKPhysicsContactDelegate {
                     innerGoal = secondBody.node,
                     let goal = innerGoal.parent
                 {
-                    if self.isLocatedInBottomHalfView(goal) {
-                        self.updateScoreForPlayer(self.player2)
-                    } else {
-                        self.updateScoreForPlayer(self.player1)
-                    }
-                    self.playing = false
-                    self.player1.removeAllEffects()
-                    self.player2.removeAllEffects()
-                    self.powerEffectTimer.invalidate()
-                    self.powerEffect?.removeFromParent()
-                    self.powerEffect = nil
+                    self.isLocatedInBottomHalfView(goal) ? self.player2.incrementScore() : self.player1.incrementScore()
+                    self.clearField()
                 }
             }
         }
@@ -489,7 +465,7 @@ extension GameScene: SKPhysicsContactDelegate {
                             self.player2.addPowerup(powerup)
                         }
                         powerup.removeFromParent()
-                        self.startTimer()
+                        self.startPowerEffectTimer()
                     }
                 }
             }
@@ -509,7 +485,7 @@ extension GameScene: SKPhysicsContactDelegate {
                             self.player2.addPowerdown(powerdown)
                         }
                         powerdown.removeFromParent()
-                        self.startTimer()
+                        self.startPowerEffectTimer()
                     }
                 }
             }
